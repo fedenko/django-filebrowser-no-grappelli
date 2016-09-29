@@ -144,6 +144,7 @@ def selectable(parser, token):
 register.tag(selectable)
 
 
+
 def get_file_extensions(qs):
     extensions = []
     if "type" in qs and qs.get("type") in SELECT_FORMATS:
@@ -154,18 +155,10 @@ def get_file_extensions(qs):
             for item in v:
                 if item:
                     extensions.append(item)
-    return mark_safe(extensions)
-
-register.simple_tag(get_file_extensions)
+    return extensions
 
 
-try:  # Import cycle from future for django 1.7+
-    from django.templatetags.future import cycle
-except ImportError:
-    pass
-else:
-    register.tag(cycle)
-
-if DJANGO_VERSION < (1, 5):
-    from django.templatetags.future import url
-    register.tag(url)
+# Django 1.9 auto escapes simple_tag unless marked as safe
+@register.simple_tag(name='get_file_extensions')
+def get_file_extensions_safe(qs):
+    return mark_safe(get_file_extensions(qs))
