@@ -19,6 +19,7 @@ setup(
     license='BSD',
     packages=find_packages(),
     include_package_data=True,
+    test_suite="runtests.runtests",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
