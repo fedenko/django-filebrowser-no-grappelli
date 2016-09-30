@@ -26,6 +26,9 @@ class Command(BaseCommand):
     args = '<media_path>'
     help = "(Re)Generate image versions."
 
+    def add_arguments(self, parser):
+        parser.add_argument('media_path', nargs='?')
+
     def handle(self, *args, **options):
         media_path = ""
 
